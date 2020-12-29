@@ -1,0 +1,9 @@
+venv
+*.csv*
+*.json
+*.yml
+!illegitimates.yml
+web/build
+web/node_modules
+!package.json
+!package-lock.json
