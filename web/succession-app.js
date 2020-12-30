@@ -278,7 +278,7 @@ export class SuccessionApp extends LitElement {
             <div class="chart-header-item">
               <img src="./static/add.svg" @click=${this.addRows} 
                 ?disabled=${this.rowsAdded === this.successors.length}> 
-              <span>Showing ${this.rowsAdded} of ${this.successors.length} successors</span>
+              <span>Showing <b>${this.rowsAdded}</b> of <b>${this.successors.length}</b> successors</span>
             </div>
             <div class="chart-header-item">
               <span>Reset</span>
@@ -292,7 +292,7 @@ export class SuccessionApp extends LitElement {
 
         <header id="table-header">
           Line of succession as of
-          ${this.selectedDate ? this._dateToString(this.selectedDate): '-'}
+          <b>${this.selectedDate ? this._dateToString(this.selectedDate): '-'}</b>
         </header>
         <section id="table-container">
           <table>
