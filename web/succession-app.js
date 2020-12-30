@@ -1,5 +1,6 @@
 /** 
- * Code licensed under GPLv3 (https://github.com/jdclarke5/succession).
+ * @license
+ * Code licensed under GPLv3 (see https://github.com/jdclarke5/british-succession).
  */
 
 import { LitElement, html, css } from 'lit-element';
@@ -34,7 +35,7 @@ export class SuccessionApp extends LitElement {
     // Chart dimensions
     this.aspectRatio = 10/4;
     // X axis from George I reign to the last updated time
-    this.minDate = new Date('1714-08-01 00:00'); 
+    this.minDate = this._stringToDate('1714-08-01'); 
     this.lastUpdated = null;
     // Y axis extent
     this.minY = 0;
@@ -272,8 +273,8 @@ export class SuccessionApp extends LitElement {
 
       <main>
       
-        <div id="chart-container">
-          <div id="chart-header">
+        <section id="chart-container">
+          <header id="chart-header">
             <div class="chart-header-item">
               <img src="./static/add.svg" @click=${this.addRows} 
                 ?disabled=${this.rowsAdded === this.successors.length}> 
@@ -284,16 +285,16 @@ export class SuccessionApp extends LitElement {
               <img src="./static/reset.svg" @click=${this.successors.length && this.resetChart}
                 ?disabled=${!this.successors.length}>
             </div>
-          </div>
+          </header>
           ${this.loading ? html`<div class="spinner"></div>` : null}
           <svg id="chart" @contextmenu=${this.onRightClick}></svg>
-        </div>
+        </section>
 
-        <div id="table-header">
+        <header id="table-header">
           Line of succession as of
           ${this.selectedDate ? this._dateToString(this.selectedDate): '-'}
-        </div>
-        <div id="table-container">
+        </header>
+        <section id="table-container">
           <table>
             <thead>
               <tr>
@@ -308,7 +309,7 @@ export class SuccessionApp extends LitElement {
               ${renderTableRows(this.selectedSuccessor)}
             </tbody>
           </table>
-        </div>
+        </section>
       
       </main>
     `;
@@ -673,7 +674,7 @@ export class SuccessionApp extends LitElement {
   }
 
   _stringToDate(string) {
-    return new Date(`${string} 00:00`);
+    return new Date(`${string}T00:00`);
   }
 
   _dateToString(date) {

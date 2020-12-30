@@ -1,3 +1,8 @@
+<!-- 
+    @license
+    Code licensed under GPLv3 (see https://github.com/jdclarke5/british-succession). 
+-->
+
 <!doctype html>
 
 <html>
@@ -8,13 +13,12 @@
     <script type="module" src="./succession-app.js"></script>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-RKX227270J"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-RKX227270J');
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-RKX227270J');
     </script>
     <style>
-
         @font-face {
             font-family: "Monotype Corsiva";
             src: url(static/monotype-corsiva.ttf);
@@ -50,21 +54,22 @@
             align-items: center;
         }
 
-        #title-donate > form > input {
+        #title-donate>form>input {
             height: 1.8em;
         }
 
-        #title-title {
+        h1 {
             font-family: "Monotype Corsiva", "Brush Script MT", "Brush Script Std", cursive;
             font-size: 2.2em;
             color: #233580;
             text-align: center;
+            margin: 0;
         }
 
         #title-info {
             text-align: right;
         }
-        
+
         #info-icon {
             cursor: pointer;
             width: 1.6em;
@@ -76,7 +81,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            background-color: rgba(256,256,256,0.8);
+            background-color: rgba(256, 256, 256, 0.8);
             width: 100%;
             height: 100vh;
             flex-direction: column;
@@ -92,7 +97,7 @@
             margin: auto;
             background-color: white;
             border-radius: 0.4em;
-            box-shadow: 0px 0px 4px 2px rgba(0,0,0,0.4);
+            box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.4);
             text-align: center;
         }
 
@@ -118,7 +123,7 @@
             text-align: center;
         }
 
-        #geni {
+        #footer-geni {
             text-align: right;
         }
 
@@ -129,74 +134,93 @@
         #img-geni {
             height: 3em;
         }
-
     </style>
 </head>
 
 <body>
-    <div id="title-header">
+    <header id="title-header">
         <div id="title-donate">
             <form action="https://www.paypal.com/donate" method="post" target="_top">
                 <input type="hidden" name="cmd" value="_donations" />
                 <input type="hidden" name="business" value="PBDVTVP9B9C3L" />
                 <input type="hidden" name="item_name" value="Donate to help keep this website running." />
                 <input type="hidden" name="currency_code" value="AUD" />
-                <input type="image" src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                <input type="image" src="https://www.paypalobjects.com/en_AU/i/btn/btn_donate_SM.gif" border="0"
+                    name="submit" title="PayPal - The safer, easier way to pay online!"
+                    alt="Donate with PayPal button" />
                 <img alt="" border="0" src="https://www.paypal.com/en_AU/i/scr/pixel.gif" width="1" height="1" />
             </form>
         </div>
-        <div id="title-title">
+        <h1 id="title-title">
             British Royal Line of Succession*
-        </div>
-        <div id="title-info">
-            <img id="info-icon" src="./static/info.svg" 
-                onclick="document.getElementById('info-modal').style.display='flex'">
-        </div>
-    </div>
-    <div id="info-modal"
-        onclick="getElementById('info-modal').style.display='none'">
-        <div id="info">
+        </h1>
+        <nav id="title-info">
+            <a onclick="document.getElementById('info-modal').style.display='flex'">
+                <img id="info-icon" src="./static/info.svg">
+            </a>
+        </nav>
+    </header>
+    <div id="info-modal" onclick="getElementById('info-modal').style.display='none'">
+        <section id="info">
             <p>
-                Welcome to the web application for the <a href="https://github.com/jdclarke5/british-succession">British Succession project</a>!
+                Welcome to the web application for the <a href="https://github.com/jdclarke5/british-succession">British
+                    Succession project</a>!
             </p>
             <p>
-                The aim of this project is to track the timeline of the line of succession to the British Throne through automated (programmatic) means. 
-                The current scope is to track all descendants of the <b>Electress Sophia of Hanover</b>. 
-                The descendants, after the <b>Act of Settlement 1701</b>, are the rightful heirs to the throne. 
-                The existing monarch and line of succession is therefore applicable from the reign of George I (1 August 1714).
+                The aim of this project is to track the timeline of the line of succession to the British Throne through
+                automated (programmatic) means.
+                The current scope is to track all descendants of the <b>Electress Sophia of Hanover</b>.
+                These descendants, according to the <b>Act of Settlement 1701</b>, are the rightful heirs to the throne.
+                The existing monarch and line of succession is therefore applicable from the reign of George I (1 August
+                1714).
             </p>
             <p>
-                <i>This is not a genealogy project!</i> We rely on well-established external sources for ancestry/descendant data.
-                The project currently uses public <b>Geni.com</b> profiles as the sole data source. 
+                <i>This is not a genealogy project!</i> We rely on well-established external sources for
+                ancestry/descendant data.
+                The project currently uses public <b>Geni.com</b> profiles as the sole data source.
                 The line of succession is known to be inaccurate due to many living profiles being private
-                (e.g. the children of <a href="https://www.geni.com/people/Zara-Tindall/6000000003085217960" target="_blank">Zara Tindall</a>).
+                (e.g. the children of <a href="https://www.geni.com/people/Zara-Tindall/6000000003085217960"
+                    target="_blank">Zara Tindall</a>).
                 Other inaccuracies should be reported/contributed to the curators at Geni, not here.
+                The website is automatically updated each week at around midnight Sunday UTC time.
             </p>
             <p>
-                The web application is made up of a <b>chart</b> and <b>table</b> component. Each <b>path</b> in the chart corresponds to a person. 
-                The path height ordering is the line of succession at that point in time. Filled circles represent birth/death. 
-                Unfilled circles represent legitimate/illegitimate dates (e.g. the abdication of Edward VIII). 
-                By default the chart/table is set to the last updated date. <b>Click</b> the chart to select a different date. 
-                <b>Hover</b> over the paths to see the corresponding highlighted row in the table. 
-                If the person is not in the line of succession at the selected date (e.g. not yet born or already died) they will appear without a number. 
-                <b>Hover</b> over the table to see the highlighted path in the chart. <b>Zoom/pan</b> the chart to see more detail. 
-                <b>Add more</b> lines to the chart using the add icon (initially limited to 500 for load time and performance reasons). 
+                The web application is made up of a <b>chart</b> and <b>table</b> component. Each <b>path</b> in the
+                chart corresponds to a person.
+                The path height ordering is the line of succession at that point in time. Filled circles represent
+                birth/death.
+                Unfilled circles represent legitimate/illegitimate dates (e.g. the abdication of Edward VIII).
+                By default the chart/table is set to the last updated date. <b>Click</b> the chart to select a different
+                date.
+                <b>Hover</b> over the paths to see the corresponding highlighted row in the table.
+                If the person is not in the line of succession at the selected date (e.g. not yet born or already died)
+                they will appear without a number.
+                <b>Hover</b> over the table to see the highlighted path in the chart. <b>Zoom/pan</b> the chart to see
+                more detail.
+                <b>Add more</b> lines to the chart using the add icon (initially limited to 500 for load time and
+                performance reasons).
                 <b>Reset</b> to the initial view using the reset icon.
             </p>
             <p>
-                You can find more information, contact, or contribute at the home page for the project <a href="https://github.com/jdclarke5/british-succession">on GitHub</a>.
+                You can find more information, contact, or contribute at the home page for the project <a
+                    href="https://github.com/jdclarke5/british-succession">on GitHub</a>.
             </p>
-        </div>
+        </section>
     </div>
     <succession-app></succession-app>
-    <div id="footer">
-        <a href="https://www.github.com/jdclarke5/british-succession/" target="_blank"><img id="img-github" src="./static/gitHub-mark-32px.png"></a>
+    <footer id="footer">
+        <div>
+            <a href="https://www.github.com/jdclarke5/british-succession/" target="_blank"><img id="img-github"
+                    src="./static/gitHub-mark-32px.png"></a>
+        </div>
         <div id="footer-info">
-            * Based on public Geni.com profiles.<br/>
+            * Based on public Geni.com profiles.<br />
             Not endorsed, operated, or sponsored by Geni.com.
         </div>
-        <a id="geni" href="https://www.geni.com/" target="_blank"><img id="img-geni" src="./static/geni.png"></a>
-    </div>
+        <div id="footer-geni">
+            <a href="https://www.geni.com/" target="_blank"><img id="img-geni" src="./static/geni.png"></a>
+        </div>
+    </footer>
 </body>
 
 </html>
