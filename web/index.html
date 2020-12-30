@@ -31,12 +31,16 @@
             font-size: 1em;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            height: 100%;
             margin: 0 auto;
             padding: 0 1em;
             width: calc(100vw - 2em);
             max-width: 1000px;
             overflow: hidden;
+            position: absolute;
+            /* Centre the body */
+            left: 0;
+            right: 0;
         }
 
         @media screen and (max-device-width: 480px) and (orientation: portrait) {
@@ -122,6 +126,7 @@
 
         #footer-info {
             text-align: center;
+            font-size: 0.7em;
         }
 
         #footer-geni {
