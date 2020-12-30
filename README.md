@@ -1,10 +1,10 @@
-# British Royal Line of Succession
+# British Succession Project
 
 Welcome to the home page for the British Succession project!
 
 ## Aim and Scope
 
-The aim of this project is to track the timeline of the line of succession to the British Throne through automated (programmatic) means. The current scope is to track all descendants of the [Electress Sophia of Hanover](https://en.wikipedia.org/wiki/Sophia_of_Hanover). These descendants, after the [Act of Settlement 1701](https://en.wikipedia.org/wiki/Act_of_Settlement_1701), are the rightful heirs to the throne. The existing monarch and line of succession is therefore applicable from the reign of George I (1 August 1714).
+The aim of this project is to track the timeline of the line of succession to the British Throne through automated (programmatic) means. The current scope is to track all descendants of the [Electress Sophia of Hanover](https://en.wikipedia.org/wiki/Sophia_of_Hanover). These descendants, according to the [Act of Settlement 1701](https://en.wikipedia.org/wiki/Act_of_Settlement_1701), are the rightful heirs to the throne. The existing monarch and line of succession is therefore applicable from the reign of George I (1 August 1714).
 
 ## Licensing
 
@@ -123,7 +123,7 @@ A list of illegitimate persons is maintained in the [illegitimates.yml](illegiti
 The line of succession calculation will use the files in the format above as inputs to calculate and output descendents in order of the line of succession. The script can be run as follows.
 
 ```sh
-python --descendants geni.yml --seed "0557aac6-264c-5a83-8f1e-a3f6cfac8b9a"
+python main.py --descendants geni.yml --seed "0557aac6-264c-5a83-8f1e-a3f6cfac8b9a"
 ```
 
 The output is `successors.csv` and `successors.json` with the following columns/fields.
@@ -178,6 +178,101 @@ npm run serve
 Navigate to http://127.0.0.1:9000 in a web browser.
 
 The web application is made up of a chart and table component. Each path in the chart corresponds to a person. The path height ordering is the line of succession at that point in time. Filled circles represent birth/death. Unfilled circles represent legitimate/illegitimate dates (e.g. the abdication of Edward VIII). By default the chart/table is set to the last updated date. Click the chart to select a different date. Hover over the paths to see the corresponding highlighted row in the table. If the person is not in the line of succession at the selected date (e.g. not yet born or already died) they will appear without a number. Hover over the table to see the highlighted path in the chart. Pan or zoom in/out of the chart to see more detail. Add more lines to the chart using the add icon (initially limited to 500 for load time and performance reasons). Reset to the initial view using the reset icon.
+
+## Web Server
+
+The production website can be reached at [british-succession.co.uk](https://british-succession.co.uk). The host is currently an Ubuntu 18.04 VM with public IP 178.62.42.196. For traceability (and reproducibility) the set up of this VM is described here.
+
+1. The master branch of the Git repository was cloned.
+
+   ```sh
+   git clone https://github.com/jdclarke5/british-succession.git
+   ```
+
+2. Python 3.8 was installed and the virtual environment was set up.
+
+   ```sh
+   sudo add-apt-repository ppa:deadsnakes/ppa
+   sudo apt install python3.8
+   sudo apt-get install python3-distutils
+   curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+   python3.8 get-pip.py
+   cd ~/british-succession
+   python3.8 -m pip install virtualenv
+   python3.8 -m virtualenv venv
+   source ./venv/bin/activate
+   pip install -r requirements.txt
+   deactivate
+   ```
+
+3. Node 10 was installed.
+
+   ```sh
+   curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
+   sudo apt-get install -y nodejs
+   ```
+
+4. The website was then built.
+
+   ```sh
+   cd british-succession/web
+   npm install
+   npm run build
+   ```
+
+5. The initial successors output was transferred manually from a local version.
+
+   ```sh
+   scp successors.json root@178.62.42.196:~/british-succession/web/static
+   ```
+
+6. Nginx was then installed and set up for a static site.
+
+   ```sh
+   sudo apt install nginx
+   sudo ufw allow 'Nginx HTTP'
+   sudo ufw allow 'Nginx HTTPS'
+   sudo ufw enable
+   sudo mkdir -p /var/www/british-succession/html
+   sudo chmod -R 755 /var/www/british-succession
+   cp -a ~/british-succession/web/build/. /var/www/british-succession/html/
+   # Enter VIM to create below nginx configuration
+   sudo vim /etc/nginx/sites-available/british-succession
+   sudo ln -s /etc/nginx/sites-available/british-succession /etc/nginx/sites-enabled/
+   sudo nginx -t
+   ```
+
+   The Nginx configuration is as follows.
+
+   ```nginx
+   server {
+       listen 80;
+       listen [::]:80;
+   
+       root /var/www/british-succession/html;
+       index index.html;
+   
+       server_name british-succession.co.uk www.british-succession.co.uk;
+   
+       location / {
+           try_files $uri $uri/ =404;
+       }
+   }
+   ```
+
+7. An SSL certificate was installed for the domain names, with the option to forward HTTP requests to HTTPS requests.
+
+   ```sh
+   sudo add-apt-repository ppa:certbot/certbot
+   sudo apt install python-certbot-nginx
+   sudo certbot --nginx -d british-succession.co.uk -d www.british-succession.co.uk
+   ```
+
+8. A cronjob was added to automate an update every Sunday at midnight UTC time by adding the following line to `crontab -e`.
+
+   ```sh
+   0 0 * * SUN bash ~/british-succession/update.sh
+   ```
 
 ## Contributions
 
