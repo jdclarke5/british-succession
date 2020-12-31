@@ -6,7 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [Unreleased](https://github.com/jdclarke5/british-succession/tree/dev)
 
-## [v1.0.0](https://github.com/jdclarke5/british-succession/releases/tag/v0.0.1) - 2020-12-31
+## [v1.0.1](https://github.com/jdclarke5/british-succession/releases/tag/v1.0.1) - 2021-01-01
+
+### Added
+
+- Axis labels in web application chart.
+
+### Fixed
+
+- Selected date arrow overflow show/hide behaviour on zoom/pan.
+
+## [v1.0.0](https://github.com/jdclarke5/british-succession/releases/tag/v1.0.0) - 2020-12-31
 
 ### Added
 

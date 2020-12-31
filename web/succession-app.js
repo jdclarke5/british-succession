@@ -95,8 +95,7 @@ export class SuccessionApp extends LitElement {
   
       #chart-container {
         position: relative;
-        overflow: hidden;
-        padding: 0 4px 24px;
+        padding: 0 0 8px;
         text-align: center;
       }
 
@@ -111,6 +110,44 @@ export class SuccessionApp extends LitElement {
 
       .tick > line {
         opacity: 0.2;
+      }
+
+      .chart-label {
+        font-size: 11px;
+        text-align: center;
+      }
+
+      #chart-label-x {
+        margin-top: 11px;
+      }
+
+      #chart-label-y-left {
+        position: absolute;
+        height: 100%;
+        width: 0;
+        white-space: nowrap;
+      }
+      
+      #chart-label-y-left > span {
+        position: absolute;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%) rotate(-90deg);
+        margin-left: -8px;
+      }
+
+      #chart-label-y-right {
+        position: absolute;
+        height: 100%;
+        width: 0;
+        white-space: nowrap;
+        right: 0;
+      }
+
+      #chart-label-y-right > span {
+        position: absolute;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%) rotate(90deg);
+        margin-left: 8px;
       }
 
       #table-header {
@@ -274,6 +311,8 @@ export class SuccessionApp extends LitElement {
       <main>
       
         <section id="chart-container">
+          <div id="chart-label-y-left" class="chart-label"><span>Order in Line</span></div>
+          <div id="chart-label-y-right" class="chart-label"><span>Order in Line</span></div>
           <header id="chart-header">
             <div class="chart-header-item">
               <img src="./static/add.svg" @click=${this.addRows} 
@@ -288,6 +327,7 @@ export class SuccessionApp extends LitElement {
           </header>
           ${this.loading ? html`<div class="spinner"></div>` : null}
           <svg id="chart" @contextmenu=${this.onRightClick}></svg>
+          <div id="chart-label-x" class="chart-label"><span>Date</span></div>
         </section>
 
         <header id="table-header">
@@ -468,10 +508,13 @@ export class SuccessionApp extends LitElement {
     // Transform the paths
     this.paths.attr(
       'transform', `translate(${tX}, ${tY}) scale(${k})`);
-    // Translate the selectedArrow
+    // Translate the selectedArrow and hide if outside x range
     const selectedArrowX = this.selectedArrow.node().x1.baseVal.value;
-    this.selectedArrow.attr(
-      'transform', `translate(${k * selectedArrowX + tX - selectedArrowX})`);
+    const selectedArrowZoomedX = k * selectedArrowX + tX;
+    const selectedArrowVisible = (selectedArrowZoomedX >= 0 
+      && selectedArrowZoomedX <= this.dimensions.width);
+    this.selectedArrow.attr('opacity', Number(selectedArrowVisible))
+      .attr('transform', `translate(${selectedArrowZoomedX - selectedArrowX})`);
   }
 
   onMouseMove() {
