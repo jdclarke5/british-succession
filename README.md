@@ -6,6 +6,8 @@ Welcome to the home page for the British Succession project!
 
 The aim of this project is to track the timeline of the line of succession to the British Throne through automated (programmatic) means. The current scope is to track all descendants of the [Electress Sophia of Hanover](https://en.wikipedia.org/wiki/Sophia_of_Hanover). These descendants, according to the [Act of Settlement 1701](https://en.wikipedia.org/wiki/Act_of_Settlement_1701), are the rightful heirs to the throne. The existing monarch and line of succession is therefore applicable from the reign of George I (1 August 1714).
 
+![](./british-succession-2020-12-31.png)
+
 ## Licensing
 
 The code for this project is (and always will be) open source and licensed under GPLv3.
