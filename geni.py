@@ -95,6 +95,9 @@ def handle_profile(response, profiles, unions, lock):
     results = response.get('results') or [response]
     get_union_ids = []
     for result in results:
+        if not result.get('id'):
+            logging.warning(f'Skipping result with no ID: {result}')
+            continue
         # Split id from geni id
         doc_id = int(result['id'].split('-')[1])
         document = Document(result, doc_id=doc_id)
