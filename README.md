@@ -276,6 +276,12 @@ The production website can be reached at [british-succession.co.uk](https://brit
    0 0 * * SUN bash ~/british-succession/update.sh
    ```
 
+9. Later, A cronjob was added to ensure that the certificate was renewed and NGINX restarted, even though this should be done by #7!
+
+   ```sh
+   0 0 * * SUN certbot renew && service nginx restart
+   ```
+
 ## Contributions
 
 If you want to contribute to this project please do so in the following ways.
